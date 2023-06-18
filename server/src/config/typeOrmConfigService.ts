@@ -1,6 +1,7 @@
 import {TypeOrmModuleOptions, TypeOrmOptionsFactory} from "@nestjs/typeorm";
 import {Injectable} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
+import {User} from "../users/users.model";
 
 @Injectable()
 export class TypeOrmConfigService  implements TypeOrmOptionsFactory {
@@ -23,6 +24,7 @@ export class TypeOrmConfigService  implements TypeOrmOptionsFactory {
             database,
             synchronize,
             migrations,
+            entities:[User]
         };
     }
 }
