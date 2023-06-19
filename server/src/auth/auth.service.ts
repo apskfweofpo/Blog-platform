@@ -9,7 +9,7 @@ export class AuthService {
 
     constructor(
         private readonly userService: UsersService,
-        private jwtService: JwtService
+        private jwtService: JwtService,
     ) {
     }
 
@@ -24,8 +24,10 @@ export class AuthService {
     }
 
     async login(user: IUser) {
-        const payload = { id: user.id, email: user.email };
+        const payload = {id: user.id, email: user.email, username: user.username};
         return {
+            email: user.email,
+            username: user.username,
             access_token: this.jwtService.sign(payload),
         };
     }
