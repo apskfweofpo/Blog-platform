@@ -6,7 +6,7 @@ enum UserRole {
 }
 
 @Entity('user')
-export class User extends BaseEntity {
+export class User  {
     @PrimaryGeneratedColumn()
     id: number;
 
