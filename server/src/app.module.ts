@@ -7,6 +7,7 @@ import {TypeOrmConfigService} from "./config/typeOrmConfigService"
 import {UsersController} from "./users/users.controller";
 import {User} from "./users/users.model";
 import {UsersModule} from "./users/users.module";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -19,7 +20,8 @@ import {UsersModule} from "./users/users.module";
             imports: [ConfigModule],
             useClass: TypeOrmConfigService
         }),
-        UsersModule
+        UsersModule,
+        AuthModule
     ],
 })
 export class AppModule {
