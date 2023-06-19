@@ -15,15 +15,9 @@ import {UsersModule} from "./users/users.module";
             envFilePath: `${process.cwd()}/config/env/${process.env.NODE_ENV}.env`,
             load: [databaseConfig]
         }),
-        TypeOrmModule.forRoot({
-            type: 'postgres',
-            host: process.env.DATABASE_HOST || 'localhost',
-            port: parseInt( process.env.DATABASE_PORT) || 5432,
-            username: process.env.DATABASE_USER || 'postgres',
-            password: process.env.DATABASE_PASSWORD || 'carrynum1',
-            database: process.env.DATABASE_NAME || 'blog-platform',
-            synchronize: true,
-            entities: [User]
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            useClass: TypeOrmConfigService
         }),
         UsersModule
     ],

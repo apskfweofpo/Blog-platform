@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "./users.model";
 import {Repository} from "typeorm";
@@ -9,8 +9,7 @@ export class UsersService {
     constructor(
         @InjectRepository(User)
         private userRepository: Repository<User>
-    ) {
-    }
+    ) {}
 
     async createUser(createUserDto): Promise<User | { warningMessage: string }> {
 
@@ -23,11 +22,11 @@ export class UsersService {
         })
 
         if (existingUserByEmail) {
-            return {warningMessage: 'Пользователь с таким email существует'}
+            throw new BadRequestException('Пользователь с таким email существует')
         }
 
         if (existingUserByName) {
-            return {warningMessage: 'Пользователь с таким username существует'}
+            throw new BadRequestException('Пользователь с таким username существует')
         }
 
         const hashedPassword = await bcrypt.hash(createUserDto.password, 3);
