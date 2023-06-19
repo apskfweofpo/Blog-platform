@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
     constructor(
         @InjectRepository(User)
-        private userRepository: Repository<User>
+        private readonly userRepository: Repository<User>
     ) {}
 
     async createUser(createUserDto): Promise<User | { warningMessage: string }> {
@@ -35,5 +35,11 @@ export class UsersService {
         user.email = createUserDto.email;
         user.password = hashedPassword;
         return this.userRepository.save(user);
+    }
+
+    async findOne(email: string): Promise<User | undefined> {
+        return this.userRepository.findOne({
+            where: {email}
+        });
     }
 }
