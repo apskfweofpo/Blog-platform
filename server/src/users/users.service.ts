@@ -13,7 +13,7 @@ export class UsersService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async createUser(createUserDto): Promise<{'access_token':string} | { warningMessage: string }> {
+    async createUser(createUserDto): Promise<{ 'access_token': string, email: string, username: string } | { warningMessage: string }> {
 
         const existingUserByName = await this.userRepository.findOne({
             where: {username: createUserDto.username}
@@ -37,8 +37,14 @@ export class UsersService {
         user.email = createUserDto.email;
         user.password = hashedPassword;
 
+        const newUser = await this.userRepository.save(user);
+
         const token = this.jwtService.sign({id: user.id, email: user.email, username: user.username});
-        return  {'access_token': token};
+        return {
+            access_token: token,
+            email: newUser.email,
+            username: newUser.username
+        };
     }
 
     async findOne(email: string): Promise<User | undefined> {
