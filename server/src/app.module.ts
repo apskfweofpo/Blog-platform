@@ -6,6 +6,7 @@ import {TypeOrmConfigService} from "./config/typeOrmConfigService"
 import {UsersModule} from "./users/users.module";
 import {AuthModule} from './auth/auth.module';
 import {BlogModule} from './blog/blog.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
     imports: [
@@ -20,7 +21,8 @@ import {BlogModule} from './blog/blog.module';
         }),
         UsersModule,
         AuthModule,
-        BlogModule
+        BlogModule,
+        FilesModule
     ],
 })
 export class AppModule {
