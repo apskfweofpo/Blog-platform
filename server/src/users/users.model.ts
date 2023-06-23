@@ -7,7 +7,7 @@ enum UserRole {
 }
 
 @Entity('user')
-export class User  {
+export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -26,7 +26,6 @@ export class User  {
         default: UserRole.CLIENT,
     })
     role: UserRole
-
 
     @OneToMany(() => Blog, (blog) => blog.author)
     blogs: Blog[]
