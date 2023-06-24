@@ -70,7 +70,22 @@ export class BlogService {
         });
     }
 
-    update(blog: UpdateBlogDto, blogId: number, image: Express.Multer.File) {
+    async update(newBlog: UpdateBlogDto, blogId: number, image: Express.Multer.File) {
 
+        const oldBlog = await this.blogRepository.findOneBy({
+            id:blogId
+        });
+
+        if (newBlog.title){
+            oldBlog.title = newBlog.title;
+        }
+
+        if (newBlog.content){
+            oldBlog.content = newBlog.content;
+        }
+        const fileName = await this.fileService.createFile(image);
+        oldBlog.image = fileName;
+
+        return await this.blogRepository.save(oldBlog);
     }
 }
