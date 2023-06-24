@@ -6,7 +6,7 @@ import {
     UseGuards,
     Request,
     UseInterceptors,
-    NestInterceptor, Get, Param, Patch
+    Get, Param, Patch
 } from '@nestjs/common';
 import {BlogService} from "./blog.service";
 import {CreateBlogDto} from "./dto/CreateBlogDto";
@@ -14,6 +14,7 @@ import {JwtAuthGuard} from "../guards/jwt-auth.guard";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {Blog} from "./blog.model";
 import {UpdateBlogDto} from "./dto/UpdateBlogDto";
+import {AuthorGuard} from "../guards/author.guard";
 
 @Controller('blog')
 export class BlogController {
@@ -42,7 +43,9 @@ export class BlogController {
     }
 
 
-    @Patch('update:id')
+    @Patch('update/:id')
+    @UseInterceptors(FileInterceptor('image'))
+    @UseGuards(JwtAuthGuard, AuthorGuard)
     updateBlog(
         @Param('id') blogId: number,
         @Body() blog: UpdateBlogDto,
