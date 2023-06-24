@@ -12,13 +12,12 @@ export class BlogService {
     constructor(
         @InjectRepository(Blog)
         private readonly blogRepository: Repository<Blog>,
-
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
-
         private readonly fileService: FilesService
     ) {
     }
+
     async create(blog: CreateBlogDto, id: number, image: Express.Multer.File): Promise<Blog> {
 
         const author = await this.userRepository.findOne({
@@ -27,7 +26,7 @@ export class BlogService {
             }
         })
 
-        if(!author){
+        if (!author) {
             throw new UnauthorizedException('Invalid token');
         }
 
@@ -41,7 +40,7 @@ export class BlogService {
         return await this.blogRepository.save(newBlog);
     }
 
-    getAll() {
+    getAll(): Promise<Blog[]> {
         return this.blogRepository.find({
             relations: {
                 author: true
@@ -54,7 +53,7 @@ export class BlogService {
         });
     }
 
-    getOne(id: number) {
+    getOne(id: number): Promise<Blog> {
         return this.blogRepository.findOne({
             where: {
                 id
@@ -70,22 +69,31 @@ export class BlogService {
         });
     }
 
-    async update(newBlog: UpdateBlogDto, blogId: number, image: Express.Multer.File) {
+    async update(newBlog: UpdateBlogDto, blogId: number, image: Express.Multer.File): Promise<Blog> {
 
         const oldBlog = await this.blogRepository.findOneBy({
-            id:blogId
+            id: blogId
         });
 
-        if (newBlog.title){
+        if (newBlog.title) {
             oldBlog.title = newBlog.title;
         }
 
-        if (newBlog.content){
+        if (newBlog.content) {
             oldBlog.content = newBlog.content;
         }
         const fileName = await this.fileService.createFile(image);
         oldBlog.image = fileName;
 
         return await this.blogRepository.save(oldBlog);
+    }
+
+    async remove(blogId: number) {
+        const blog = await this.blogRepository.findOneBy({
+            id: blogId
+        });
+
+        return this.blogRepository.remove(blog);
+
     }
 }
