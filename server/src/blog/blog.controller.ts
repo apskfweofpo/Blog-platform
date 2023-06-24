@@ -6,7 +6,7 @@ import {
     UseGuards,
     Request,
     UseInterceptors,
-    Get, Param, Patch
+    Get, Param, Patch, Delete
 } from '@nestjs/common';
 import {BlogService} from "./blog.service";
 import {CreateBlogDto} from "./dto/CreateBlogDto";
@@ -42,7 +42,6 @@ export class BlogController {
         return this.blogService.getOne(id);
     }
 
-
     @Patch('update/:id')
     @UseInterceptors(FileInterceptor('image'))
     @UseGuards(JwtAuthGuard, AuthorGuard)
@@ -52,5 +51,13 @@ export class BlogController {
         @UploadedFile() image: Express.Multer.File
     ) {
         return this.blogService.update(blog, blogId, image);
+    }
+
+    @Delete('/:id')
+    @UseGuards(JwtAuthGuard, AuthorGuard)
+    removeBlog(
+        @Param('id') blogId: number,
+    ) {
+        return this.blogService.remove(blogId);
     }
 }
