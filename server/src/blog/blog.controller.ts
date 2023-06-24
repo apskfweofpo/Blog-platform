@@ -1,8 +1,18 @@
-import {Body, Controller, Post, UploadedFile, UseGuards, Request, UseInterceptors} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Post,
+    UploadedFile,
+    UseGuards,
+    Request,
+    UseInterceptors,
+    NestInterceptor
+} from '@nestjs/common';
 import {BlogService} from "./blog.service";
 import {CreateBlogDto} from "./dto/CreateBlogDto";
 import {JwtAuthGuard} from "../guards/jwt-auth.guard";
 import {FileInterceptor} from "@nestjs/platform-express";
+import {Blog} from "./blog.model";
 
 @Controller('blog')
 export class BlogController {
@@ -12,12 +22,12 @@ export class BlogController {
     }
 
     @Post('create')
-    @UseGuards(JwtAuthGuard)
     @UseInterceptors(FileInterceptor('image'))
-    createPost(@Request() req,
+    @UseGuards(JwtAuthGuard)
+    async createPost(@Request() req,
                @Body() blog: CreateBlogDto,
-               @UploadedFile() image: Express.Multer.File,) {
-       return  this.blogService.create(blog, req.user.id, image);
+               @UploadedFile() image: Express.Multer.File,): Promise<Blog> {
+        return this.blogService.create(blog, req.user.id, image);
     }
 
 }
