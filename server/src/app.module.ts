@@ -7,6 +7,8 @@ import {UsersModule} from "./users/users.module";
 import {AuthModule} from './auth/auth.module';
 import {BlogModule} from './blog/blog.module';
 import { FilesModule } from './files/files.module';
+import {ServeStaticModule} from "@nestjs/serve-static";
+import * as path from "path";
 
 @Module({
     imports: [
@@ -14,6 +16,9 @@ import { FilesModule } from './files/files.module';
             isGlobal: true,
             envFilePath: `${process.cwd()}/config/env/${process.env.NODE_ENV}.env`,
             load: [databaseConfig]
+        }),
+        ServeStaticModule.forRoot({
+            rootPath: path.resolve(__dirname, 'static')
         }),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
