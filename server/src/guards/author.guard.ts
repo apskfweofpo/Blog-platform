@@ -20,8 +20,8 @@ export class AuthorGuard implements CanActivate {
 
         const blog = await this.blogRepository.findOne({
             where: {id},
-            relations:{
-                author:true
+            relations: {
+                author: true
             }
         })
 
