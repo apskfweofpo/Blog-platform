@@ -1,4 +1,4 @@
-import {CanActivate, ExecutionContext} from "@nestjs/common";
+import {CanActivate, ExecutionContext, Logger} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "../users/users.model";
 import {Repository} from "typeorm";
@@ -19,11 +19,13 @@ export class AuthorGuard implements CanActivate {
         const {id} = request.params;
 
         const blog = await this.blogRepository.findOne({
-            where: {id}
+            where: {id},
+            relations:{
+                author:true
+            }
         })
 
         const authorId = blog.author.id;
-
         const userId = request.user.id;
 
         const user = await this.userRepository.findOne({
