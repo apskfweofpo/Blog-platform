@@ -12,14 +12,13 @@ export class BlogService {
         @InjectRepository(Blog)
         private readonly blogRepository: Repository<Blog>,
 
-        @InjectRepository(Blog)
+        @InjectRepository(User)
         private readonly userRepository: Repository<User>,
 
         private readonly fileService: FilesService
     ) {
     }
     async create(blog: CreateBlogDto, id: number, image: Express.Multer.File): Promise<Blog> {
-        const fileName = await this.fileService.createFile(image);
 
         const author = await this.userRepository.findOne({
             where: {
@@ -31,6 +30,7 @@ export class BlogService {
             throw new UnauthorizedException('Invalid token');
         }
 
+        const fileName = await this.fileService.createFile(image);
         const newBlog = this.blogRepository.create();
         newBlog.title = blog.title;
         newBlog.content = blog.content;
