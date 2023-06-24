@@ -5,6 +5,7 @@ import {Repository} from "typeorm";
 import {Blog} from "./blog.model";
 import {FilesService} from "../files/files.service";
 import {User} from "../users/users.model";
+import {UpdateBlogDto} from "./dto/UpdateBlogDto";
 
 @Injectable()
 export class BlogService {
@@ -38,5 +39,38 @@ export class BlogService {
         newBlog.author = author;
 
         return await this.blogRepository.save(newBlog);
+    }
+
+    getAll() {
+        return this.blogRepository.find({
+            relations: {
+                author: true
+            },
+            select: {
+                author: {
+                    username: true
+                }
+            }
+        });
+    }
+
+    getOne(id: number) {
+        return this.blogRepository.findOne({
+            where: {
+                id
+            },
+            relations: {
+                author: true
+            },
+            select: {
+                author: {
+                    username: true
+                }
+            }
+        });
+    }
+
+    update(blog: UpdateBlogDto, blogId: number, image: Express.Multer.File) {
+
     }
 }
