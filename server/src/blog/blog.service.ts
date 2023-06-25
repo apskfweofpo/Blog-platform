@@ -1,7 +1,7 @@
 import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {CreateBlogDto} from "./dto/CreateBlogDto";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Like, Repository} from "typeorm";
+import {DeleteResult, Like, Repository} from "typeorm";
 import {Blog} from "./blog.model";
 import {FilesService} from "../files/files.service";
 import {User} from "../users/users.model";
@@ -90,16 +90,11 @@ export class BlogService {
         return await this.blogRepository.save(oldBlog);
     }
 
-    async remove(blogId: number) {
-        const blog = await this.blogRepository.findOneBy({
-            id: blogId
-        });
-
-        return this.blogRepository.remove(blog);
-
+    async remove(blogId: number): Promise<DeleteResult> {
+        return this.blogRepository.delete(blogId);
     }
 
-    async findByString(blog: string) {
+    async findByString(blog: string): Promise<Blog[]> {
         return await this.blogRepository.find({
             where: {
                 title: Like(`%${blog}%`)
