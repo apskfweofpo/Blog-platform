@@ -40,7 +40,7 @@ export class BlogService {
         return await this.blogRepository.save(newBlog);
     }
 
-    getAll(): Promise<Blog[]> {
+    getAll(limit: number, page: number): Promise<Blog[]> {
         return this.blogRepository.find({
             relations: {
                 author: true
@@ -49,7 +49,9 @@ export class BlogService {
                 author: {
                     username: true
                 }
-            }
+            },
+            take: limit,
+            skip: (page - 1) * limit
         });
     }
 

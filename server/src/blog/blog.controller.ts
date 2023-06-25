@@ -6,7 +6,7 @@ import {
     UseGuards,
     Request,
     UseInterceptors,
-    Get, Param, Patch, Delete
+    Get, Param, Patch, Delete, Query
 } from '@nestjs/common';
 import {BlogService} from "./blog.service";
 import {CreateBlogDto} from "./dto/CreateBlogDto";
@@ -33,8 +33,11 @@ export class BlogController {
     }
 
     @Get('')
-    async getBlogs() {
-        return this.blogService.getAll();
+    async getBlogs(
+        @Query('limit') limit = 5,
+        @Query('page') page = 1,
+    ) {
+        return this.blogService.getAll(limit, page);
     }
 
     @Get('/:id')
@@ -43,7 +46,7 @@ export class BlogController {
     }
 
     @Get('/search/:blog')
-    search(@Param('blog') blog: string ) {
+    search(@Param('blog') blog: string) {
         return this.blogService.findByString(blog)
     }
 
