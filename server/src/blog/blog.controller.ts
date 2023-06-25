@@ -32,17 +32,22 @@ export class BlogController {
         return this.blogService.create(blog, req.user.id, image);
     }
 
-    @Get('all')
+    @Get('')
     async getBlogs() {
         return this.blogService.getAll();
     }
 
-    @Get('find/:id')
+    @Get('/:id')
     async getBlog(@Param('id') id: number) {
         return this.blogService.getOne(id);
     }
 
-    @Patch('update/:id')
+    @Get('/search/:blog')
+    search(@Param('blog') blog: string ) {
+        return this.blogService.findByString(blog)
+    }
+
+    @Patch('/:id')
     @UseInterceptors(FileInterceptor('image'))
     @UseGuards(JwtAuthGuard, AuthorGuard)
     updateBlog(

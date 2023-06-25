@@ -1,7 +1,7 @@
 import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {CreateBlogDto} from "./dto/CreateBlogDto";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
+import {Like, Repository} from "typeorm";
 import {Blog} from "./blog.model";
 import {FilesService} from "../files/files.service";
 import {User} from "../users/users.model";
@@ -95,5 +95,13 @@ export class BlogService {
 
         return this.blogRepository.remove(blog);
 
+    }
+
+    async findByString(blog: string) {
+        return await this.blogRepository.find({
+            where: {
+                title: Like(`%${blog}%`)
+            }
+        })
     }
 }
