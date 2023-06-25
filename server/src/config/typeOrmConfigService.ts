@@ -3,6 +3,7 @@ import {Injectable} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 import {User} from "../users/users.model";
 import {Blog} from "../blog/blog.model";
+import {Category} from "../categories/category.model";
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -27,7 +28,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
             database,
             synchronize,
             migrations,
-            entities: [User, Blog]
+            entities: [User, Blog, Category]
         };
     }
 }
