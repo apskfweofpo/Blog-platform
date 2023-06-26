@@ -22,7 +22,6 @@ export class CategoriesService {
     }
 
     async remove(id: number) {
-        console.log(id)
         const category = await this.categoryRepository.findOne({
             where: {id}
         })
