@@ -1,6 +1,5 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
-import {Blog} from "../blog/blog.model";
 import {Repository} from "typeorm";
 import {Category} from "./category.model";
 import {CreateCategoryDto} from "./dto/createCategoryDto";
