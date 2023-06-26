@@ -14,7 +14,6 @@ export class SignupResponse {
     role: string;
 }
 
-
 class Category {
     @ApiProperty({example: '1'})
     id: number;
