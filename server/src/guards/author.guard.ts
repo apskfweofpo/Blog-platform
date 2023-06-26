@@ -34,7 +34,7 @@ export class AuthorGuard implements CanActivate {
             }
         })
 
-        if (blog && userId && authorId === userId || user.role === "admin") {
+        if (blog && userId && (authorId === userId || user.role === "admin")) {
             return true;
         } else false;
     }
