@@ -21,7 +21,7 @@ export class UsersController {
         private readonly userService: UsersService) {
     }
 
-    @ApiOkResponse({ type: SignupResponse })
+    @ApiOkResponse({type: SignupResponse})
     @Post('/signup')
     @UsePipes(new ValidationPipe())
     @HttpCode(HttpStatus.CREATED)
@@ -30,9 +30,9 @@ export class UsersController {
         return this.userService.createUser(createUserDto);
     }
 
-    @ApiOkResponse({ type: GetUserResponse })
+    @ApiOkResponse({type: GetUserResponse})
     @Get('/:id')
-    getUser(@Param('id') id: number){
+    getUser(@Param('id') id: number) {
         return this.userService.getOne(id);
     }
 }
