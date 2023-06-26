@@ -6,6 +6,7 @@ import {Blog} from "./blog.model";
 import {FilesService} from "../files/files.service";
 import {User} from "../users/users.model";
 import {UpdateBlogDto} from "./dto/UpdateBlogDto";
+import {Category} from "../categories/category.model";
 
 @Injectable()
 export class BlogService {
@@ -14,6 +15,9 @@ export class BlogService {
         private readonly blogRepository: Repository<Blog>,
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
+        @InjectRepository(Category)
+        private readonly categoryRepository: Repository<Category>,
+
         private readonly fileService: FilesService
     ) {
     }
@@ -36,6 +40,18 @@ export class BlogService {
         newBlog.content = blog.content;
         newBlog.image = fileName;
         newBlog.author = author;
+
+        let categories = []
+
+
+        for( let idCategory of JSON.parse(blog.categories)) {
+           const category = await this.categoryRepository.findOne({
+                where: {id:idCategory}
+            })
+            categories.push(category);
+            console.log(categories)
+        }
+        newBlog.categories = categories;
 
         return await this.blogRepository.save(newBlog);
     }
