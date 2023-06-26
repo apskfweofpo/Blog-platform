@@ -11,7 +11,8 @@ export class UsersService {
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
         private readonly jwtService: JwtService,
-    ) {}
+    ) {
+    }
 
     async createUser(createUserDto): Promise<{ 'access_token': string, email: string, username: string, role: string } | { warningMessage: string }> {
 
@@ -52,5 +53,18 @@ export class UsersService {
         return this.userRepository.findOne({
             where: {email}
         });
+    }
+
+    async getOne(id: number) {
+        return this.userRepository.findOne({
+                where: {id},
+                relations: {
+                    blogs: {
+                        categories: true
+                    }
+                },
+                select: ["id", "blogs", "username"]
+            }
+        )
     }
 }
