@@ -1,10 +1,10 @@
 import {
     Body,
-    Controller,
+    Controller, Get,
     Header,
     HttpCode,
     HttpStatus,
-    Injectable,
+    Injectable, Param,
     Post,
     UsePipes,
     ValidationPipe
@@ -25,5 +25,10 @@ export class UsersController {
     @Header('Content-type', 'application/json')
     createUser(@Body() createUserDto: CreateUserDto) {
         return this.userService.createUser(createUserDto);
+    }
+
+    @Get('/:id')
+    getUser(@Param('id') id: number){
+        return this.userService.getOne(id);
     }
 }
