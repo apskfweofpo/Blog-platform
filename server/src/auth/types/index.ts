@@ -1,7 +1,7 @@
 import {ApiProperty} from "@nestjs/swagger";
 
 export class LoginUserRequest {
-    @ApiProperty({example: 'Ivan'})
+    @ApiProperty({example: 'admin@mail.ru'})
     email: string;
 
     @ApiProperty({example: '12345'})
@@ -9,10 +9,10 @@ export class LoginUserRequest {
 }
 
 export class LoginUserResponse {
-    @ApiProperty({example: 'admin1@mail.ru'})
+    @ApiProperty({example: 'admin@mail.ru'})
     email: string;
 
-    @ApiProperty({example: 'admin1'})
+    @ApiProperty({example: 'admin'})
     username: string;
 
     @ApiProperty({example: 'client'})
@@ -20,7 +20,4 @@ export class LoginUserResponse {
 
     @ApiProperty({example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImVtYWlsIjoiYWRtaW4xQG1haWwucnUiLCJ1c2VybmFtZSI6ImFkbWluMSIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE2ODc4MTM3MDgsImV4cCI6MTY5MDY2NDkwOH0.J8qPsYGYIaOx1FcnfVege--fexVfBDSi17_sBo3bHxQ'})
     access_token: string;
-
-
-
 }
