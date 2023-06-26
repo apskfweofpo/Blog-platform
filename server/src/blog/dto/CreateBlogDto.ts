@@ -14,5 +14,6 @@ export class CreateBlogDto {
     @IsNotEmpty()
     readonly content: string
 
-
+    @ApiProperty({example: '[8, 9]'})
+    readonly categories: string
 }
