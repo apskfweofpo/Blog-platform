@@ -11,6 +11,8 @@ import {
 } from '@nestjs/common';
 import {UsersService} from "./users.service";
 import {CreateUserDto} from "./dto/createUserDto";
+import {ApiOkResponse} from "@nestjs/swagger";
+import {GetUserResponse, SignupResponse} from "./types";
 
 @Injectable()
 @Controller('users')
@@ -19,6 +21,7 @@ export class UsersController {
         private readonly userService: UsersService) {
     }
 
+    @ApiOkResponse({ type: SignupResponse })
     @Post('/signup')
     @UsePipes(new ValidationPipe())
     @HttpCode(HttpStatus.CREATED)
@@ -27,6 +30,7 @@ export class UsersController {
         return this.userService.createUser(createUserDto);
     }
 
+    @ApiOkResponse({ type: GetUserResponse })
     @Get('/:id')
     getUser(@Param('id') id: number){
         return this.userService.getOne(id);
