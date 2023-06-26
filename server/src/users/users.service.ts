@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "./users.model";
 import {Repository} from "typeorm";
@@ -55,8 +55,8 @@ export class UsersService {
         });
     }
 
-    async getOne(id: number) {
-        return this.userRepository.findOne({
+    async getOne(id: number): Promise<User | NotFoundException> {
+        const user = await this.userRepository.findOne({
                 where: {id},
                 relations: {
                     blogs: {
@@ -66,5 +66,10 @@ export class UsersService {
                 select: ["id", "blogs", "username"]
             }
         )
+        if (!user) {
+            throw new NotFoundException(`User with id ${id} not found`);
+        }
+
+        return user
     }
 }
