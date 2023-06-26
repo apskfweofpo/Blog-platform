@@ -59,7 +59,8 @@ export class BlogService {
     getAll(limit: number, page: number): Promise<Blog[]> {
         return this.blogRepository.find({
             relations: {
-                author: true
+                author: true,
+                categories: true
             },
             select: {
                 author: {
@@ -77,7 +78,8 @@ export class BlogService {
                 id
             },
             relations: {
-                author: true
+                author: true,
+                categories: true
             },
             select: {
                 author: {
@@ -114,6 +116,15 @@ export class BlogService {
         return await this.blogRepository.find({
             where: {
                 title: Like(`%${blog}%`)
+            },
+            relations: {
+                categories: true,
+                author: true
+            },
+            select: {
+                author: {
+                    username: true
+                }
             }
         })
     }
