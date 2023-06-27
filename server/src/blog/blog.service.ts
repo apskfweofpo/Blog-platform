@@ -49,7 +49,6 @@ export class BlogService {
                 where: {id:idCategory}
             })
             categories.push(category);
-            console.log(categories)
         }
         newBlog.categories = categories;
 
