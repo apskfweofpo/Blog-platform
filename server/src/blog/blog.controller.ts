@@ -15,6 +15,8 @@ import {FileInterceptor} from "@nestjs/platform-express";
 import {Blog} from "./blog.model";
 import {UpdateBlogDto} from "./dto/UpdateBlogDto";
 import {AuthorGuard} from "../guards/author.guard";
+import {ApiOkResponse} from "@nestjs/swagger";
+import {CreateBlogResponse, GetBlogResponse, RemoveBlogResponse, UpdateBlogResponse} from "./types";
 
 @Controller('blog')
 export class BlogController {
@@ -23,6 +25,7 @@ export class BlogController {
     ) {
     }
 
+    @ApiOkResponse({type: CreateBlogResponse})
     @Post('create')
     @UseInterceptors(FileInterceptor('image'))
     @UseGuards(JwtAuthGuard)
@@ -32,6 +35,7 @@ export class BlogController {
         return this.blogService.create(blog, req.user.id, image);
     }
 
+    @ApiOkResponse({type: [GetBlogResponse]})
     @Get('')
     async getBlogs(
         @Query('limit') limit = 5,
@@ -40,16 +44,19 @@ export class BlogController {
         return this.blogService.getAll(limit, page);
     }
 
+    @ApiOkResponse({type: GetBlogResponse})
     @Get('/:id')
     async getBlog(@Param('id') id: number) {
         return this.blogService.getOne(id);
     }
 
+    @ApiOkResponse({type: GetBlogResponse})
     @Get('/search/:blog')
     search(@Param('blog') blog: string) {
         return this.blogService.findByString(blog)
     }
 
+    @ApiOkResponse({type: UpdateBlogResponse})
     @Patch('/:id')
     @UseInterceptors(FileInterceptor('image'))
     @UseGuards(JwtAuthGuard, AuthorGuard)
@@ -61,6 +68,7 @@ export class BlogController {
         return this.blogService.update(blog, blogId, image);
     }
 
+    @ApiOkResponse({type: RemoveBlogResponse})
     @Delete('/:id')
     @UseGuards(JwtAuthGuard, AuthorGuard)
     removeBlog(
