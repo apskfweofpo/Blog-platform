@@ -41,7 +41,7 @@ export class BlogService {
         newBlog.image = fileName;
         newBlog.author = author;
 
-        let categories = []
+        let categories: Array<Category> = [];
 
 
         for( let idCategory of JSON.parse(blog.categories)) {
