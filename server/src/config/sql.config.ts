@@ -9,5 +9,6 @@ export const sqlConfig = registerAs('database', () => ({
     username: process.env.DATABASE_USER || 'postgres',
     password: process.env.DATABASE_PASSWORD || 'carrynum1',
     database: process.env.DATABASE_NAME || 'blog-platform',
+    migrations: ["dist/migrations/*.js"],
     synchronize: true,
 }));
