@@ -15,7 +15,7 @@ import * as path from "path";
     imports: [
         ConfigModule.forRoot({
             isGlobal: true,
-            envFilePath: `${process.cwd()}/config/env/${process.env.NODE_ENV}.env`,
+            envFilePath: `.${process.env.NODE_ENV}.env`,
             load: [databaseConfig]
         }),
         ServeStaticModule.forRoot({
