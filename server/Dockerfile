@@ -1,13 +1,11 @@
-FROM node:12.13-alpline
+FROM node:18
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-COPY ./dist ./dist
-
-CMD["npm", "run", "start:dev"]
+CMD [ "npm", "run", "start:dev" ]
