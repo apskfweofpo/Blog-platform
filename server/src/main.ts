@@ -13,7 +13,7 @@ async function bootstrap() {
         .build();
     const document = SwaggerModule.createDocument(app, config)
     SwaggerModule.setup('swagger', app, document)
-    Logger.log(`Server start on port: ${process.env.PORT}`)
+    Logger.log(`Server start on port: ${process.env.SERVER_PORT}`)
     app.useGlobalPipes(new ValidationPipe());
     await app.listen(process.env.PORT);
 }
