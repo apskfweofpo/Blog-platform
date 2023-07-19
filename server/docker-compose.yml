@@ -23,8 +23,6 @@ services:
     env_file:
       - .development.env
     environment:
-      POSTGRES_DB: blog-platform
-      POSTGRES_PASSWORD: carrynum1
       PG_DATA: /var/lib/postgresql/data
     ports:
       - 5432:5432
