@@ -15,7 +15,7 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, document)
     Logger.log(`Server start on port: ${process.env.SERVER_PORT}`)
     app.useGlobalPipes(new ValidationPipe());
-    await app.listen(process.env.PORT);
+    await app.listen(process.env.SERVER_PORT);
 }
 
 bootstrap();
