@@ -12,11 +12,11 @@ export class CategoriesService {
     ) {
     }
 
-    createCategory(category: CreateCategoryDto): Promise<Category> {
+    async createCategory(category: CreateCategoryDto): Promise<Category> {
         return  this.categoryRepository.save(category)
     }
 
-    getAll() : Promise<Category[]> {
+    async getAll() : Promise<Category[]> {
         return this.categoryRepository.find()
     }
 

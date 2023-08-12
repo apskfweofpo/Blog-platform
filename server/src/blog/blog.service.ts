@@ -55,7 +55,7 @@ export class BlogService {
         return await this.blogRepository.save(newBlog);
     }
 
-    getAll(limit: number, page: number): Promise<Blog[]> {
+    async getAll(limit: number, page: number): Promise<Blog[]> {
         return this.blogRepository.find({
             relations: {
                 author: true,
@@ -71,7 +71,7 @@ export class BlogService {
         });
     }
 
-    getOne(id: number): Promise<Blog> {
+    async getOne(id: number): Promise<Blog> {
         return this.blogRepository.findOne({
             where: {
                 id
